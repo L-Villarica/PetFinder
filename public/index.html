@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pets Frontend</title>
+</head>
+<body>
+  <h1>Welcome to the Pets App</h1>
+  <p>Click the buttons below to interact with the backend API.</p>
+  
+  <button id="getAllPets">Get All Pets</button>
+  <button id="getPetByOwner">Get Pet By Owner</button>
+  <button id="getPetByName">Get Pet By Name</button>
+  
+  <div id="output"></div>
+
+  <script>
+    const outputDiv = document.getElementById("output");
+
+    document.getElementById("getAllPets").addEventListener("click", async () => {
+      outputDiv.innerHTML = "Loading...";
+      const response = await fetch("/api/v1/pets");
+      const data = await response.json();
+      outputDiv.innerHTML = JSON.stringify(data, null, 2);
+    });
+
+    document.getElementById("getPetByOwner").addEventListener("click", async () => {
+      const owner = prompt("Enter owner's name:");
+      if (owner) {
+        outputDiv.innerHTML = "Loading...";
+        const response = await fetch(`/api/v1/pets/owner?owner=${owner}`);
+        const data = await response.json();
+        outputDiv.innerHTML = JSON.stringify(data, null, 2);
+      }
+    });
+
+    document.getElementById("getPetByName").addEventListener("click", async () => {
+      const name = prompt("Enter pet's name:");
+      if (name) {
+        outputDiv.innerHTML = "Loading...";
+        const response = await fetch(`/api/v1/pets/${name}`);
+        const data = await response.json();
+        outputDiv.innerHTML = JSON.stringify(data, null, 2);
+      }
+    });
+  </script>
+</body>
+</html>
